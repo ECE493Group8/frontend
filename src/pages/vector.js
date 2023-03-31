@@ -12,7 +12,7 @@ function WordInputPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.get(`http://127.0.0.1:5000/vector?word=${word}`)
+    axios.get(`http://129.128.215.93:5000/vector?word=${word}`)
       .then(response => {
         setResponse(response.data);
       })

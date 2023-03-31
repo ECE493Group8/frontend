@@ -8,7 +8,7 @@ function WordNumberPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.get(`http://127.0.0.1:5000/neighbours?words=${word}&n=${number}`);
+    const response = await axios.get(`http://129.128.215.93:5000/neighbours?words=${word}&n=${number}`);
     setResponse(response.data);
   };
 

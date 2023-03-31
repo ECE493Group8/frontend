@@ -10,7 +10,7 @@ function ThreeWordInputPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.get(`http://127.0.0.1:5000/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
+    const response = await axios.get(`http://129.128.215.93:5000/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
     setResponse(response.data);
   };
 

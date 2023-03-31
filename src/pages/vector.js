@@ -36,7 +36,9 @@ function WordInputPage() {
       {response && (
         <div className="response">
           <h2 className="response-title">vector representation of: {response.word}</h2>
+          <div className="response-text-container">
           <p className="response-text">{response.vector.join(', ')}</p>
+          </div>
         </div>
       )}
     </div>

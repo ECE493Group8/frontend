@@ -43,6 +43,7 @@ function WordNumberPage() {
       {response && (
         <div className="response">
           <h2 className="response-title">Closest words to: {response.words[0]}</h2>
+          <div className="response-text-container">
           <table>
             <thead>
               <tr>
@@ -59,6 +60,7 @@ function WordNumberPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

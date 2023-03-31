@@ -39,6 +39,7 @@ function ThreeWordInputPage() {
       {response && (
         <div className="response">
           <h2 className="response-title">Best fits for the analogy:</h2>
+          <div className="response-text-container">
           <table>
             <thead>
               <tr>
@@ -55,6 +56,7 @@ function ThreeWordInputPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

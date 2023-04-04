@@ -19,7 +19,7 @@ function WordListInputPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const wordsArray = words.split(',').map(word => word.trim());
-        axios.get(`http://127.0.0.1:5000/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}`)
+        axios.get(`http://129.128.215.93:5000/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}`)
         .then(response => {
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);

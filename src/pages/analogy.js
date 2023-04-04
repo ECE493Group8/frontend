@@ -21,12 +21,14 @@ function ThreeWordInputPage() {
         <div className="label">
           <label htmlFor="word1">Word 1:</label>
           <input type="text" id="word1" className="input" value={word1} onChange={(e) => setWord1(e.target.value)} required />
+          is to
         </div>
         <div className="label">
           <label htmlFor="word2">Word 2:</label>
           <input type="text" id="word2" className="input" value={word2} onChange={(e) => setWord2(e.target.value)} required />
         </div>
         <div className="label">
+          as
           <label htmlFor="word3">Word 3:</label>
           <input type="text" id="word3" className="input" value={word3} onChange={(e) => setWord3(e.target.value)} required />
         </div>

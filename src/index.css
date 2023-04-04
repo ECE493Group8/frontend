@@ -12,6 +12,7 @@ code {
     monospace;
 }
 .word-input-page {
+  margin-top: 0rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,7 +25,23 @@ code {
   min-height: 100vh;
 }
 
+.word-list-input-page {
+  margin-top: 0rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: #1d1f2f;
+  color: #fff;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
 .three-word-input-page {
+  margin-top: 0rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +54,8 @@ code {
 }
 
 .title {
+
+  margin-top: 35rem;
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #fff;

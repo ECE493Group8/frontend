@@ -12,17 +12,18 @@ code {
     monospace;
 }
 .word-input-page {
-  margin-top: 0rem;
+  margin-top: 0rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   padding: 2rem;
   box-sizing: border-box;
   background-color: #1d1f2f;
   color: #fff;
   min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .word-list-input-page {
@@ -41,16 +42,18 @@ code {
 }
 
 .three-word-input-page {
-  margin-top: 0rem;
+  margin-top: 0rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   padding: 2rem;
   box-sizing: border-box;
   background-color: #1d1f2f;
   color: #fff;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .title {

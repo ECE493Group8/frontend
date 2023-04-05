@@ -57,6 +57,7 @@ code {
 }
 
 .title {
+  margin-top: 10rem; 
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #fff;
@@ -81,6 +82,17 @@ code {
   font-size: 1.2rem;
   color: #fff;
 }
+
+.analogy-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+
 
 .input {
   border: none;

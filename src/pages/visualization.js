@@ -43,7 +43,7 @@ function WordListInputPage() {
 
         <form className="form" onSubmit={handleSubmit}>
             <label className="label">
-            Words:
+            Words (comma separated list of at least 3 words):
             <input className="input" type="text" value={words} onChange={handleInputChange} />
             </label>
             <label className="label">

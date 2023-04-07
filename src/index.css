@@ -11,12 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table {
+  margin: auto;
+}
+
+.home-page {
+  margin-top: 0rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: #1d1f2f;
+  color: #fff;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.home-title {
+  margin: 15vh 0 0 0;
+  font-size: 10em;
+}
+
+.home-description {
+  margin: 0;
+}
+
 .word-input-page {
   margin-top: 0rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
   background-color: #1d1f2f;
@@ -31,7 +58,6 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
   background-color: #1d1f2f;
@@ -46,7 +72,6 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
   background-color: #1d1f2f;
@@ -57,16 +82,21 @@ code {
 }
 
 .title {
-  margin-top: 10rem; 
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #fff;
 }
 
+.description {
+  font-size: 1.4rem;
+  padding-bottom: 1.6rem;
+  margin-bottom: 1.2rem;
+  margin-top: 0;
+  max-width: 100%;
+  border-bottom: 2px solid #1d1f2f80;
+}
+
 .form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   background-color: #2b2d42;
   padding: 2rem;
@@ -79,6 +109,7 @@ code {
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 1rem;
+  margin-top: 1.6rem;
   font-size: 1.2rem;
   color: #fff;
 }
@@ -92,11 +123,9 @@ code {
   color: #fff;
 }
 
-
-
 .input {
   border: none;
-  border-bottom: 2px solid #fff;
+  border-radius: 0.5rem;
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
@@ -107,16 +136,6 @@ code {
   width: 90%;
 }
 
-.button {
-  background-color: #fff;
-  color: #1d1f2f;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
 .button:hover {
   background-color: #eee;
 }
@@ -124,13 +143,14 @@ code {
 .response {
   margin-top: 2rem;
   background-color: #2b2d42;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 0.5rem;
 }
 
 .response-title {
   font-size: 1.5rem;
   color: #fff;
+  margin-top: 0;
   margin-bottom: 1rem;
 }
 
@@ -142,4 +162,33 @@ code {
 .response-text-container{
   height: 200px;
   overflow: auto;
+}
+
+.analogy-input-ctr {
+  display: inline-flex;
+}
+
+.analogy-input {
+  width: 7.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  background-color: #1d1f2f;
+  color: #fff;
+}
+
+.analogy-text {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  white-space: nowrap;
+}
+
+.help-text {
+  color: rgb(161, 161, 161);
+  font-style: italic;
 }

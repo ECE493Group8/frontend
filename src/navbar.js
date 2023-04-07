@@ -26,14 +26,14 @@ export default function Navbar() {
     <AppBar position="static">
       <NavToolbar>
         <Typography variant="h6" component="div">
-          looking for a good name still
+          Word2Med
         </Typography>
         <NavLinkContainer>
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/vector">Vector Inference</NavLink>
-          <NavLink to="/analogy">Analogy Testing</NavLink>
           <NavLink to="/neighbourhood">Neighbourhood</NavLink>
+          <NavLink to="/analogy">Analogy Testing</NavLink>
           <NavLink to="/visualization">Visualization</NavLink>
+          <NavLink to="/vector">Vector Inference</NavLink>
         </NavLinkContainer>
       </NavToolbar>
     </AppBar>

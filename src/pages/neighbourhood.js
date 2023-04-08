@@ -11,7 +11,7 @@ function WordNumberPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const response = await axios.get(`http://129.128.215.93:5000/neighbours?words=${word}&n=${number}`);
+    const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}`);
     setResponse(response.data);
     setIsLoading(false);
   };

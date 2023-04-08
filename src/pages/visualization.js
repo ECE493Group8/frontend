@@ -22,7 +22,7 @@ function WordListInputPage() {
         event.preventDefault();
         setIsLoading(true);
         const wordsArray = words.split(',').map(word => word.trim());
-        axios.get(`http://129.128.215.93:5000/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}`)
+        axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}`)
         .then(response => {
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);

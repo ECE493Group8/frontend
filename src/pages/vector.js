@@ -14,7 +14,7 @@ function WordInputPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
-    axios.get(`http://129.128.215.93:5000/vector?word=${word}`)
+    axios.get(`https://api.word2med.com/vector?word=${word}`)
       .then(response => {
         setResponse(response.data);
         setIsLoading(false);

@@ -13,7 +13,7 @@ function ThreeWordInputPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const response = await axios.get(`http://129.128.215.93:5000/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
+    const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
     setResponse(response.data);
     console.log(response.data);
     setWord1(response.data.a);

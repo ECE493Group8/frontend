@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act, waitForElementToBeRemoved } from '@testing-library/react';
 import axios from 'axios';
 import ThreeWordInputPage from '../analogy';
 test('renders the ThreeWordInputPage component', () => {
@@ -61,7 +61,8 @@ describe('ThreeWordInputPage', () => {
         await expect(targetWordInput.validationMessage).toBe('Constraints not satisfied');
       });
 
-      test('submitting the form fetches data', async () => {
+      jest.setTimeout(200000)
+      test('submitting the form fetches data and displays the results', async () => {
         // Mock the axios.get() method to return some test data
         const mockedAxios = jest.spyOn(axios, 'get');
         const testData = {
@@ -86,7 +87,17 @@ describe('ThreeWordInputPage', () => {
         fireEvent.click(submitButton);
         
         await act(async () => {
-            await waitFor(() => expect(mockedAxios).toHaveBeenCalledTimes(1));
+            await waitFor(() => expect(mockedAxios).toHaveBeenCalledTimes(1),{ timeout: 5000 });
+            const loadingIndicator = await waitFor(() => screen.getByRole('progressbar'));
+            expect(loadingIndicator).toBeInTheDocument();
+            // wait for results to be displayed
+            
           });
+          //fireEvent.click(submitButton);
+          await act(async () => {
+            expect(screen.getByText(/queen/i)).toBeInTheDocument();
+            expect(screen.getByText(/prince/i)).toBeInTheDocument();
+          });
+        
       });
   });

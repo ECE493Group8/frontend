@@ -15,7 +15,7 @@ describe('Analogy Test Suite', () => {
     const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
     const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
     const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
+    const numberInput = screen.getByPlaceholderText(/5/i);
     const submitButton = screen.getByRole('button', { name: /submit/i });
     expect(word1Input).toBeInTheDocument();
     expect(word2Input).toBeInTheDocument();
@@ -37,6 +37,12 @@ describe('Analogy Test Suite', () => {
     fireEvent.click(submitButton);
     await waitFor(() => screen.getByText('Analogy completions:'));
 
+    //verify input fields are considered valid:
+    expect(word1Input.validity.valid).toBe(true);
+    expect(word2Input.validity.valid).toBe(true);
+    expect(word3Input.validity.valid).toBe(true);
+    expect(numberInput.validity.valid).toBe(true);
+
     //Verify there are 10 results
     const resultsTable = screen.getByRole('table');
     const rows = resultsTable.querySelectorAll('tbody > tr');
@@ -46,7 +52,7 @@ describe('Analogy Test Suite', () => {
     rows.forEach(row=> expect(row.textContent).toMatch(/[a-zA-Z_]+[01].[0-9]+/))
   });
 
-  test.skip('AW1 IEC 1 and AW2 VEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
+  test('AW1 IEC 1 and AW2 VEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
     const NUM_RESULTS = '10';
     const WORD1 = '2';
     const WORD2 = 'mouse';
@@ -57,7 +63,7 @@ describe('Analogy Test Suite', () => {
     const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
     const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
     const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
+    const numberInput = screen.getByPlaceholderText(/5/i);
     const submitButton = screen.getByRole('button', { name: /submit/i });
     expect(word1Input).toBeInTheDocument();
     expect(word2Input).toBeInTheDocument();
@@ -75,392 +81,8 @@ describe('Analogy Test Suite', () => {
     expect(word3Input.value).toBe(WORD3);
     expect(numberInput.value).toBe(NUM_RESULTS);
 
-    //Press submit and wait for results
+    //Press submit and verify that the input is invalid
     fireEvent.click(submitButton);
-    await expect(word1Input.validationMessage).toBe('Constraints not satisfied');
+    expect(word1Input.validity.valid).toBe(false);
   });
-
-  test.skip('AW1 IEC 2 and AW2 VEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat*';
-    const WORD2 = 'mouse';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word1Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 IEC 3 and AW2 VEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'the rat';
-    const WORD2 = 'mouse';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word1Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test('AW1 IEC 4 and AW2 VEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = '';
-    const WORD2 = 'mouse';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    const errorMessage = await screen.findByText(/please fill out this field/i);
-    expect(errorMessage).toBeInTheDocument();
-    // await expect(word1Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 IEC 1 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = '2';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word2Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 IEC 2 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'mouse*';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word2Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 IEC 3 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'the mouse';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word2Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 IEC 4 and AW3 VEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = '';
-    const WORD3 = 'elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word2Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 VEC 1 and AW3 IEC 1 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'mouse';
-    const WORD3 = '2';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word3Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 VEC 1 and AW3 IEC 2 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'mouse';
-    const WORD3 = 'elephant*';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word3Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 VEC 1 and AW3 IEC 3 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'mouse';
-    const WORD3 = 'the elephant';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word3Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-  test.skip('AW1 VEC 1 and AW2 VEC 1 and AW3 IEC 4 and AN VEC 1', async () => {
-    const NUM_RESULTS = '10';
-    const WORD1 = 'rat';
-    const WORD2 = 'mouse';
-    const WORD3 = '';
-    render(<ThreeWordInputPage />);
-
-    //Verify buttons exist
-    const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-    const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-    const word3Input = screen.getByPlaceholderText(/e\.g\. "king"/i);
-    const numberInput = screen.getByRole('spinbutton', { name: /number of results/i });
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    expect(word1Input).toBeInTheDocument();
-    expect(word2Input).toBeInTheDocument();
-    expect(word3Input).toBeInTheDocument();
-    expect(numberInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-
-    //prefill buttons with test values
-    fireEvent.change(word1Input, { target: { value: WORD1 } });
-    fireEvent.change(word2Input, { target: { value: WORD2 } });
-    fireEvent.change(word3Input, { target: { value: WORD3 } });
-    fireEvent.change(numberInput, { target: { value: NUM_RESULTS } });
-    expect(word1Input.value).toBe(WORD1);
-    expect(word2Input.value).toBe(WORD2);
-    expect(word3Input.value).toBe(WORD3);
-    expect(numberInput.value).toBe(NUM_RESULTS);
-
-    //Press submit and wait for results
-    fireEvent.click(submitButton);
-    await expect(word3Input.validationMessage).toBe('Constraints not satisfied');
-  });
-
-
-
-  
-
-
-
-
 })

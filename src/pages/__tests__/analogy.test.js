@@ -12,11 +12,11 @@ test('renders the ThreeWordInputPage component', () => {
 describe('ThreeWordInputPage', () => {
     test('renders the analogy input', () => {
       render(<ThreeWordInputPage />);
-        const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
-        expect(word1Input).toBeInTheDocument();
+      const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
+      expect(word1Input).toBeInTheDocument();
 
-        const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
-        expect(word2Input).toBeInTheDocument();
+      const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
+      expect(word2Input).toBeInTheDocument();
     });
   
     test('renders the target word input', () => {

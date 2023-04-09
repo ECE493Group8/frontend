@@ -30,6 +30,13 @@ function WordNumberPage() {
             placeholder='e.g. "scoliosis"'
             value={word}
             onChange={(e) => setWord(e.target.value)}
+            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            onInvalid={(e) => {
+              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+            }}
             required
           />
         </div>
@@ -38,11 +45,18 @@ function WordNumberPage() {
           <input
             id="number-input"
             className="input"
-            type="number"
+            type="text"
             defaultValue={'10'}
             placeholder='5'
             value={number}
             onChange={(e) => setNumber(e.target.value)}
+            pattern="[1-9]\d*"
+              onInvalid={(e) => {
+                e.target.setCustomValidity("Please an integer greater than 0.");
+              }}
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+              }}
             required
           />
         </div>

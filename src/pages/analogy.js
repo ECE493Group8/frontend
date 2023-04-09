@@ -30,9 +30,39 @@ function ThreeWordInputPage() {
         <div className="label">
           <label htmlFor="analogy-input-ctr">Analogy:</label>
           <div className="analogy-input-ctr">
-            <input type="text" id="word1" className="analogy-input" value={word1} onChange={(e) => setWord1(e.target.value)} required placeholder='e.g. "man"' />
+            <input 
+              type="text" 
+              id="word1" 
+              className="analogy-input" 
+              value={word1} 
+              onChange={(e) => setWord1(e.target.value)} 
+              pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+              onInvalid={(e) => {
+                e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+              }}
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+              }}
+              required 
+              placeholder='e.g. "man"' 
+            />
             <span className='analogy-text'>is to</span>
-            <input type="text" id="word2" className="analogy-input" value={word2} onChange={(e) => setWord2(e.target.value)} required placeholder='e.g. "woman"'/>
+            <input 
+              type="text" 
+              id="word2" 
+              className="analogy-input" 
+              value={word2} 
+              onChange={(e) => setWord2(e.target.value)} 
+              pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+              onInvalid={(e) => {
+                e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+              }}
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+              }}
+              required
+              placeholder='e.g. "woman"'
+            />
           </div>
         </div>
         <div className="label">
@@ -44,6 +74,13 @@ function ThreeWordInputPage() {
             placeholder='e.g. "king"'
             value={word3}
             onChange={(e) => setWord3(e.target.value)}
+            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            onInvalid={(e) => {
+              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+            }}
             required
           />
         </div>
@@ -52,10 +89,17 @@ function ThreeWordInputPage() {
           <input
             id="number-input"
             className="input"
-            type="number"
+            type="text"
             placeholder='5'
             value={number}
             onChange={(e) => setNumber(e.target.value)}
+            pattern="[1-9]\d*"
+              onInvalid={(e) => {
+                e.target.setCustomValidity("Please an integer greater than 0.");
+              }}
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+              }}
             required
           />
         </div>

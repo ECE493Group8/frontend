@@ -15,7 +15,7 @@ function ThreeWordInputPage() {
     setIsLoading(true);
     const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
     setResponse(response.data);
-    console.log(response.data);
+    // console.log(response.data);
     setWord1(response.data.a);
     setWord2(response.data.b);
     setWord3(response.data.c);
@@ -53,7 +53,6 @@ function ThreeWordInputPage() {
             id="number-input"
             className="input"
             type="number"
-            defaultValue={'10'}
             placeholder='5'
             value={number}
             onChange={(e) => setNumber(e.target.value)}

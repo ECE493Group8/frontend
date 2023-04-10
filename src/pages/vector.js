@@ -32,7 +32,21 @@ function WordInputPage() {
         <p className="description">Get the n-dimensional vector for a word</p>
         <label className="label">
           Word:
-          <input className="input" type="text" value={word} onChange={handleInputChange} placeholder='e.g. "fracture"' required/>
+          <input 
+            className="input" 
+            type="text" 
+            value={word} 
+            onChange={handleInputChange} 
+            placeholder='e.g. "fracture"' 
+            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            onInvalid={(e) => {
+              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+            }}
+            required
+          />
         </label>
         {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
       </form>

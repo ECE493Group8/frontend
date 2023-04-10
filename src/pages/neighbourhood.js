@@ -12,6 +12,7 @@ function WordNumberPage() {
     event.preventDefault();
     setIsLoading(true);
     const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}`);
+    // console.log(response.data);
     setResponse(response.data);
     setIsLoading(false);
   };
@@ -30,6 +31,13 @@ function WordNumberPage() {
             placeholder='e.g. "scoliosis"'
             value={word}
             onChange={(e) => setWord(e.target.value)}
+            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            onInvalid={(e) => {
+              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+            }}
+            onInput={(e) => {
+              e.target.setCustomValidity("");
+            }}
             required
           />
         </div>
@@ -38,11 +46,17 @@ function WordNumberPage() {
           <input
             id="number-input"
             className="input"
-            type="number"
-            defaultValue={'10'}
+            type="text"
             placeholder='5'
             value={number}
             onChange={(e) => setNumber(e.target.value)}
+            pattern="[1-9]\d*"
+              onInvalid={(e) => {
+                e.target.setCustomValidity("Please an integer greater than 0.");
+              }}
+              onInput={(e) => {
+                e.target.setCustomValidity("");
+              }}
             required
           />
         </div>

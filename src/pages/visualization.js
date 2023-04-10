@@ -49,11 +49,39 @@ function WordListInputPage() {
             <p className="description">Plot words on a 2D grid</p>
             <label className="label">
             Words (comma separated list of at least 3 words):
-            <input className="input" type="text" value={words} onChange={handleInputChange} placeholder='e.g. "herniation, stenosis, fracture"' required />
+            <input 
+                className="input" 
+                type="text" 
+                value={words} 
+                onChange={handleInputChange} 
+                placeholder='e.g. "herniation, stenosis, fracture"'
+                pattern="^([a-zA-Z]+(_[a-zA-Z]+)*, ?){2,}([a-zA-Z]+(_[a-zA-Z]+)*) ?$" 
+                onInvalid={(e) => {
+                    e.target.setCustomValidity("Please enter a comma separated list of 3 or more valid words.");
+                }}
+                onInput={(e) => {
+                e.target.setCustomValidity("");
+                }}
+                required
+            />
             </label>
             <label className="label">
             Number:
-            <input className="input" type="number" value={n} onChange={handleNumberChange} placeholder='5' required />
+            <input 
+                className="input" 
+                type="text" 
+                value={n} 
+                onChange={handleNumberChange} 
+                placeholder='5' 
+                pattern="(?:[6-9]|[1-9]\d+)"
+                onInvalid={(e) => {
+                    e.target.setCustomValidity("Please an integer greater than 5.");
+                }}
+                onInput={(e) => {
+                    e.target.setCustomValidity("");
+                }}
+                required
+            />
             </label>
             {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
         </form>

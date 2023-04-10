@@ -73,9 +73,9 @@ function WordListInputPage() {
                 value={n} 
                 onChange={handleNumberChange} 
                 placeholder='5' 
-                pattern="[1-9]\d*"
+                pattern="(?:[6-9]|[1-9]\d+)"
                 onInvalid={(e) => {
-                    e.target.setCustomValidity("Please an integer greater than 0.");
+                    e.target.setCustomValidity("Please an integer greater than 5.");
                 }}
                 onInput={(e) => {
                     e.target.setCustomValidity("");

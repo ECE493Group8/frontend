@@ -11,15 +11,6 @@ describe('Analogy Test Suite', () => {
     const WORD3 = 'elephant';
     render(<ThreeWordInputPage />);
 
-    const mockedAxios = jest.spyOn(axios, 'get');
-    const testData = {
-      a: 'man',
-      b: 'woman',
-      c: 'king',
-      completions: [['queen', 0.2], ['prince', 0.5]],
-    };
-    mockedAxios.mockResolvedValueOnce({ data: testData });
-
     //Verify buttons exist
     const word1Input = screen.getByPlaceholderText(/e\.g\. "man"/i);
     const word2Input = screen.getByPlaceholderText(/e\.g\. "woman"/i);
@@ -52,10 +43,10 @@ describe('Analogy Test Suite', () => {
     expect(word3Input.validity.valid).toBe(true);
     expect(numberInput.validity.valid).toBe(true);
 
-    //Verify there are 10 results
+    //Verify there are the correct number of results
     const resultsTable = screen.getByRole('table');
     const rows = resultsTable.querySelectorAll('tbody > tr');
-    expect(rows.length).toBe(parseInt(2));
+    expect(rows.length).toBe(parseInt(NUM_RESULTS));
 
     //Verify each row contains a word and a distance
     rows.forEach(row=> expect(row.textContent).toMatch(/[a-zA-Z_]+[01].[0-9]+/))

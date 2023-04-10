@@ -12,6 +12,7 @@ function WordNumberPage() {
     event.preventDefault();
     setIsLoading(true);
     const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}`);
+    // console.log(response.data);
     setResponse(response.data);
     setIsLoading(false);
   };
@@ -46,7 +47,6 @@ function WordNumberPage() {
             id="number-input"
             className="input"
             type="text"
-            defaultValue={'10'}
             placeholder='5'
             value={number}
             onChange={(e) => setNumber(e.target.value)}

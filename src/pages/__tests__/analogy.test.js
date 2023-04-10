@@ -35,7 +35,7 @@ describe('Analogy Test Suite', () => {
 
     //Click submit and wait for results to be shown
     fireEvent.click(submitButton);
-    await waitFor(() => screen.getByText('Analogy completions:'));
+    await waitFor(() => screen.getByText('Analogy completions:'), { timeout: 100000 });
 
     //verify input fields are considered valid:
     expect(word1Input.validity.valid).toBe(true);

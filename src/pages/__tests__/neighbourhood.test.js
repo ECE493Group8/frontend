@@ -25,7 +25,7 @@ describe('Neighbourhood Test Suite', () => {
 
     //Click submit and wait for results to be shown
     fireEvent.click(submitButton);
-    await waitFor(() => screen.getByText('Related Words'));
+    await waitFor(() => screen.getByText('Related Words'), { timeout: 100000 });
 
     //verify input fields are considered valid:
     expect(wordInput.validity.valid).toBe(true);

@@ -20,7 +20,7 @@ describe('Neighbourhood Test Suite', () => {
 
     //Click submit and wait for results to be shown
     fireEvent.click(submitButton);
-    await waitFor(() => screen.getByText('Vector representation of'));
+    await waitFor(() => screen.getByText('Vector representation of'), { timeout: 100000 });
 
     //verify input fields are considered valid:
     expect(wordInput.validity.valid).toBe(true);

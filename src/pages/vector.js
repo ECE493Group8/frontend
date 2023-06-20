@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
+import { INPUT_WORD_ERROR } from '../constants';
 
 function WordInputPage() {
   const [word, setWord] = useState('');
@@ -40,7 +41,7 @@ function WordInputPage() {
             placeholder='e.g. "fracture"' 
             pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
             onInvalid={(e) => {
-              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+              e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}
             onInput={(e) => {
               e.target.setCustomValidity("");

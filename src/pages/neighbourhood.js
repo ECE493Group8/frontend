@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
+import { INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR, NEIGHBOURHOOD_NUMBER_OF_RESULTS, NEIGHBOURHOOD_PROMPT, NEIGHBOURHOOD_SUBTITLE, NEIGHBOURHOOD_TITLE } from '../constants';
 
 function WordNumberPage() {
   const [word, setWord] = useState('');
@@ -19,11 +20,11 @@ function WordNumberPage() {
 
   return (
     <div className="word-input-page">
-      <h1 className="title">Neighbourhood Inference</h1>
+      <h1 className="title">{NEIGHBOURHOOD_TITLE}e</h1>
       <form onSubmit={handleSubmit} className="form">
-        <p className="description">Get related words</p>
+        <p className="description">{NEIGHBOURHOOD_SUBTITLE}</p>
         <div className="label">
-          <label htmlFor="word-input">Word:</label>
+          <label htmlFor="word-input">{NEIGHBOURHOOD_PROMPT}</label>
           <input
             id="word-input"
             className="input"
@@ -33,7 +34,7 @@ function WordNumberPage() {
             onChange={(e) => setWord(e.target.value)}
             pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
             onInvalid={(e) => {
-              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+              e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}
             onInput={(e) => {
               e.target.setCustomValidity("");
@@ -42,7 +43,7 @@ function WordNumberPage() {
           />
         </div>
         <div className="label">
-          <label htmlFor="number-input">Number of results:</label>
+          <label htmlFor="number-input">{NEIGHBOURHOOD_NUMBER_OF_RESULTS}</label>
           <input
             id="number-input"
             className="input"
@@ -52,7 +53,7 @@ function WordNumberPage() {
             onChange={(e) => setNumber(e.target.value)}
             pattern="[1-9]\d*"
               onInvalid={(e) => {
-                e.target.setCustomValidity("Please an integer greater than 0.");
+                e.target.setCustomValidity(INPUT_NUMBER_ERROR_0);
               }}
               onInput={(e) => {
                 e.target.setCustomValidity("");

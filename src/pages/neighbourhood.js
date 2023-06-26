@@ -70,7 +70,7 @@ function WordNumberPage() {
             <thead>
               <tr>
                 <th>Word</th>
-                <th>Distance</th>
+                <th>Similarity</th>
               </tr>
             </thead>
             <tbody>

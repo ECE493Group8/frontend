@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
 import Plot from 'react-plotly.js';
+import { INPUT_NUMBER_ERROR_5 } from '../constants';
 
 function WordListInputPage() {
     const [words, setWords] = useState('');
@@ -75,7 +76,7 @@ function WordListInputPage() {
                 placeholder='5' 
                 pattern="(?:[6-9]|[1-9]\d+)"
                 onInvalid={(e) => {
-                    e.target.setCustomValidity("Please an integer greater than 5.");
+                    e.target.setCustomValidity(INPUT_NUMBER_ERROR_5);
                 }}
                 onInput={(e) => {
                     e.target.setCustomValidity("");

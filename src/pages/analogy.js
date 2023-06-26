@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
+import { ANALOGY_PROMPT, ANALOGY_SUBTITLE, ANALOGY_TITLE, INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR } from '../constants';
 
 function ThreeWordInputPage() {
   const [word1, setWord1] = useState('');
@@ -24,11 +25,11 @@ function ThreeWordInputPage() {
 
   return (
     <div className="three-word-input-page">
-      <h1 className="title">Analogy Testing</h1>
+      <h1 className="title">{ANALOGY_TITLE}</h1>
       <form onSubmit={handleSubmit} className="form">
-        <p className="description" style={{maxWidth: '25em'}}>Apply an analogy to a target word</p>
+        <p className="description" style={{maxWidth: '25em'}}>{ANALOGY_SUBTITLE}</p>
         <div className="label">
-          <label htmlFor="analogy-input-ctr">Analogy:</label>
+          <label htmlFor="analogy-input-ctr">{ANALOGY_PROMPT}</label>
           <div className="analogy-input-ctr">
             <input 
               type="text" 
@@ -38,7 +39,7 @@ function ThreeWordInputPage() {
               onChange={(e) => setWord1(e.target.value)} 
               pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
               onInvalid={(e) => {
-                e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+                e.target.setCustomValidity(INPUT_WORD_ERROR);
               }}
               onInput={(e) => {
                 e.target.setCustomValidity("");
@@ -55,7 +56,7 @@ function ThreeWordInputPage() {
               onChange={(e) => setWord2(e.target.value)} 
               pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
               onInvalid={(e) => {
-                e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+                e.target.setCustomValidity(INPUT_WORD_ERROR);
               }}
               onInput={(e) => {
                 e.target.setCustomValidity("");
@@ -76,7 +77,7 @@ function ThreeWordInputPage() {
             onChange={(e) => setWord3(e.target.value)}
             pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
             onInvalid={(e) => {
-              e.target.setCustomValidity("Please enter a word. (no letters, spaces, or symbols)");
+              e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}
             onInput={(e) => {
               e.target.setCustomValidity("");
@@ -95,7 +96,7 @@ function ThreeWordInputPage() {
             onChange={(e) => setNumber(e.target.value)}
             pattern="[1-9]\d*"
               onInvalid={(e) => {
-                e.target.setCustomValidity("Please an integer greater than 0.");
+                e.target.setCustomValidity(INPUT_NUMBER_ERROR_0);
               }}
               onInput={(e) => {
                 e.target.setCustomValidity("");
@@ -134,4 +135,5 @@ function ThreeWordInputPage() {
     </div>
   );
 }
+
 export default ThreeWordInputPage;

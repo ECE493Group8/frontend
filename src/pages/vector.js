@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
-import { INPUT_WORD_ERROR } from '../constants';
+import { INPUT_WORD_ERROR, MODEL_KEY, MODELS } from '../constants';
 
 function WordInputPage() {
   const [word, setWord] = useState('');
+  const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const changeModel = (event) => {
+    setModel(event.target.value);
+    localStorage.setItem(MODEL_KEY, event.target.value);
+  };
 
   const handleInputChange = (event) => {
     setWord(event.target.value);
@@ -15,8 +22,9 @@ function WordInputPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
-    axios.get(`https://api.word2med.com/vector?word=${word}`)
-      .then(response => {
+    // axios.get(`https://api.word2med.com/vector?word=${word}&model=${model}`)
+    axios.get(`http://129.128.215.93:5000/vector?word=${word}&model=${model}`)
+    .then(response => {
         setResponse(response.data);
         setIsLoading(false);
       })
@@ -49,6 +57,25 @@ function WordInputPage() {
             required
           />
         </label>
+        <div className="model-select-list">
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+          <InputLabel id="demo-simple-select-label">Model</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={model}
+            label="Model"
+            onChange={e => changeModel(e)}
+            sx={{ color: "white" }}
+          >
+            {
+              Object.entries(MODELS).map(([model_name, model_id]) => (
+                <MenuItem key={model_id} value={model_id}>{model_name}</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+        </div>
         {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
       </form>
 

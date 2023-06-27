@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
-import { ANALOGY_PROMPT, ANALOGY_SUBTITLE, ANALOGY_TITLE, INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR, MODELS } from '../constants';
+import { ANALOGY_PROMPT, ANALOGY_SUBTITLE, ANALOGY_TITLE, INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR, MODELS, MODEL_KEY } from '../constants';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function ThreeWordInputPage() {
@@ -9,16 +9,21 @@ function ThreeWordInputPage() {
   const [word2, setWord2] = useState('');
   const [word3, setWord3] = useState('');
   const [number, setNumber] = useState(10);
-  const [model, setModel] = useState('');
+  const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const changeModel = (event) => {
+    setModel(event.target.value);
+    localStorage.setItem(MODEL_KEY, event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}`);
+    // const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
+    const response = await axios.get(`http://129.128.215.93:5000/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
     setResponse(response.data);
-    // console.log(response.data);
     setWord1(response.data.a);
     setWord2(response.data.b);
     setWord3(response.data.c);
@@ -114,11 +119,12 @@ function ThreeWordInputPage() {
             id="demo-simple-select"
             value={model}
             label="Model"
-            onChange={e => setModel(e.target.value)}
+            onChange={e => changeModel(e)}
+            sx={{ color: "white" }}
           >
             {
               Object.entries(MODELS).map(([model_name, model_id]) => (
-                <MenuItem value={model_id}>{model_name}</MenuItem>
+                <MenuItem key={model_id} value={model_id}>{model_name}</MenuItem>
               ))
             }
           </Select>

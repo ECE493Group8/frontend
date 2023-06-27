@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import Plot from 'react-plotly.js';
-import { INPUT_NUMBER_ERROR_5 } from '../constants';
+import { INPUT_NUMBER_ERROR_5, MODEL_KEY, MODELS } from '../constants';
 
 function WordListInputPage() {
     const [words, setWords] = useState('');
     const [n, setN] = useState(10);
+    const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
     const [response, setResponse] = useState(null);
     const [wordList, setWordList] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    const changeModel = (event) => {
+        setModel(event.target.value);
+        localStorage.setItem(MODEL_KEY, event.target.value);
+    };
 
     const handleInputChange = (event) => {
         setWords(event.target.value);
@@ -23,7 +30,8 @@ function WordListInputPage() {
         event.preventDefault();
         setIsLoading(true);
         const wordsArray = words.split(',').map(word => word.trim());
-        axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}`)
+        // axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
+        axios.get(`http://129.128.215.93:5000/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
         .then(response => {
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);
@@ -84,6 +92,25 @@ function WordListInputPage() {
                 required
             />
             </label>
+            <div className="model-select-list">
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel id="demo-simple-select-label">Model</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={model}
+                    label="Model"
+                    onChange={e => changeModel(e)}
+                    sx={{ color: "white" }}
+                >
+                    {
+                    Object.entries(MODELS).map(([model_name, model_id]) => (
+                        <MenuItem key={model_id} value={model_id}>{model_name}</MenuItem>
+                    ))
+                    }
+                </Select>
+                </FormControl>
+            </div>
             {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
         </form>
 

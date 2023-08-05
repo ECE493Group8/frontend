@@ -19,8 +19,7 @@ function WordNumberPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}&model=${model}`);
-    const response = await axios.get(`http://129.128.215.93:5000/neighbours?words=${word}&n=${number}&model=${model}`);
+    const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}&model=${model}`);
     setResponse(response.data);
     setIsLoading(false);
   };
@@ -39,7 +38,7 @@ function WordNumberPage() {
             placeholder='e.g. "scoliosis"'
             value={word}
             onChange={(e) => setWord(e.target.value)}
-            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
             onInvalid={(e) => {
               e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}

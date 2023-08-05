@@ -21,8 +21,7 @@ function ThreeWordInputPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
-    const response = await axios.get(`http://129.128.215.93:5000/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
+    const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
     setResponse(response.data);
     setWord1(response.data.a);
     setWord2(response.data.b);
@@ -44,7 +43,7 @@ function ThreeWordInputPage() {
               className="analogy-input" 
               value={word1} 
               onChange={(e) => setWord1(e.target.value)} 
-              pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+              pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
               onInvalid={(e) => {
                 e.target.setCustomValidity(INPUT_WORD_ERROR);
               }}
@@ -61,7 +60,7 @@ function ThreeWordInputPage() {
               className="analogy-input" 
               value={word2} 
               onChange={(e) => setWord2(e.target.value)} 
-              pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+              pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
               onInvalid={(e) => {
                 e.target.setCustomValidity(INPUT_WORD_ERROR);
               }}
@@ -82,7 +81,7 @@ function ThreeWordInputPage() {
             placeholder='e.g. "king"'
             value={word3}
             onChange={(e) => setWord3(e.target.value)}
-            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
             onInvalid={(e) => {
               e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}

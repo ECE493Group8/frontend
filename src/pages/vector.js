@@ -22,8 +22,7 @@ function WordInputPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // axios.get(`https://api.word2med.com/vector?word=${word}&model=${model}`)
-    axios.get(`http://129.128.215.93:5000/vector?word=${word}&model=${model}`)
+    axios.get(`https://api.word2med.com/vector?word=${word}&model=${model}`)
     .then(response => {
         setResponse(response.data);
         setIsLoading(false);
@@ -47,7 +46,7 @@ function WordInputPage() {
             value={word} 
             onChange={handleInputChange} 
             placeholder='e.g. "fracture"' 
-            pattern="^[a-zA-Z]+(_[a-zA-Z]+)*$"
+            pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
             onInvalid={(e) => {
               e.target.setCustomValidity(INPUT_WORD_ERROR);
             }}

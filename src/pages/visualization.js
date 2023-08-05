@@ -30,8 +30,7 @@ function WordListInputPage() {
         event.preventDefault();
         setIsLoading(true);
         const wordsArray = words.split(',').map(word => word.trim());
-        // axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
-        axios.get(`http://129.128.215.93:5000/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
+        axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
         .then(response => {
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);
@@ -64,7 +63,7 @@ function WordListInputPage() {
                 value={words} 
                 onChange={handleInputChange} 
                 placeholder='e.g. "herniation, stenosis, fracture"'
-                pattern="^([a-zA-Z]+(_[a-zA-Z]+)*, ?){2,}([a-zA-Z]+(_[a-zA-Z]+)*) ?$" 
+                pattern="^([a-zA-Z]+( [a-zA-Z]+)*, ?){2,}([a-zA-Z]+( [a-zA-Z]+)*) ?$" 
                 onInvalid={(e) => {
                     e.target.setCustomValidity("Please enter a comma separated list of 3 or more valid words.");
                 }}

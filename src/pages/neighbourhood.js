@@ -26,7 +26,7 @@ function WordNumberPage() {
 
   return (
     <div className="word-input-page">
-      <h1 className="title">{NEIGHBOURHOOD_TITLE}e</h1>
+      <h1 className="title">{NEIGHBOURHOOD_TITLE}</h1>
       <form onSubmit={handleSubmit} className="form">
         <p className="description">{NEIGHBOURHOOD_SUBTITLE}</p>
         <div className="label">

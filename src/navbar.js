@@ -33,7 +33,7 @@ export default function Navbar() {
           <NavLink to="/neighbourhood">Neighbourhood</NavLink>
           <NavLink to="/analogy">Analogy Testing</NavLink>
           <NavLink to="/visualization">Visualization</NavLink>
-          <NavLink to="/vector">Vector Inference</NavLink>
+          {/* <NavLink to="/vector">Vector Inference</NavLink> */}
         </NavLinkContainer>
       </NavToolbar>
     </AppBar>

@@ -3,7 +3,7 @@ import { LoadingButton } from '@mui/lab'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import Plot from 'react-plotly.js';
-import { INPUT_NUMBER_ERROR_5, MODEL_KEY, MODELS } from '../constants';
+import { INPUT_NUMBER_ERROR_5, MODEL_KEY, MODELS, COLORS } from '../constants';
 
 function WordListInputPage() {
     const [words, setWords] = useState('');
@@ -11,6 +11,7 @@ function WordListInputPage() {
     const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
     const [response, setResponse] = useState(null);
     const [wordList, setWordList] = useState(null);
+    const [responseN, setResponseN] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const changeModel = (event) => {
@@ -34,6 +35,7 @@ function WordListInputPage() {
         .then(response => {
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);
+            setResponseN(response.data.n);
             setIsLoading(false);
         })
         .catch(error => {
@@ -48,6 +50,7 @@ function WordListInputPage() {
         type: 'scatter',
         mode: 'markers',
         name: wordList && wordList[index] && wordList[index].trim(),
+        marker: {color: COLORS[Math.floor(index / (responseN + 1))]},
     }));
 
     return (

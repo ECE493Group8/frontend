@@ -1,0 +1,16 @@
+export const COLORS = [
+  "aqua",
+  "blue",
+  "fuchsia",
+  "gray",
+  "green",
+  "lime",
+  "maroon",
+  "navy",
+  "olive",
+  "purple",
+  "red",
+  "silver",
+  "teal",
+  "yellow",
+];

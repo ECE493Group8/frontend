@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import Plot from 'react-plotly.js';
 import { INPUT_NUMBER_ERROR_5, MODEL_KEY, MODELS, COLORS } from '../constants';
@@ -13,6 +13,7 @@ function WordListInputPage() {
     const [wordList, setWordList] = useState(null);
     const [responseN, setResponseN] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const changeModel = (event) => {
         setModel(event.target.value);
@@ -27,21 +28,21 @@ function WordListInputPage() {
         setN(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         const wordsArray = words.split(',').map(word => word.trim());
-        axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
-        .then(response => {
+        try {
+            const response = await axios.get(`https://api.word2med.com/embeddings?${wordsArray.map((word) => `words=${word}`).join('&')}&n=${n}&model=${model}`)
             setResponse(response.data.embeddings_list);
             setWordList(response.data.words_list);
             setResponseN(response.data.n);
+            setErrorMessage('');
+        } catch (error) {
+            setErrorMessage(error.message);
+        } finally {
             setIsLoading(false);
-        })
-        .catch(error => {
-            console.error(error);
-            setIsLoading(false);
-        });
+        }
     };
 
     const plotData = response && response.map(([x, y], index) => ({
@@ -116,7 +117,8 @@ function WordListInputPage() {
             {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
         </form>
 
-        {response && (
+        {errorMessage.length === 0 ?
+        response && (
             <div className="response">
             <h2 className="response-title">Plot:</h2>
             <Plot
@@ -134,7 +136,16 @@ function WordListInputPage() {
                 }}
             />
             </div>
-        )}
+        )
+        :
+        (
+            <div className="response">
+            <Alert variant="filled" severity="error">
+                <strong>{errorMessage}</strong>
+            </Alert>
+            </div>
+        )
+        }
         </div>
     );
 }

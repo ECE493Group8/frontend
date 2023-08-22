@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import { INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR, NEIGHBOURHOOD_NUMBER_OF_RESULTS, NEIGHBOURHOOD_PROMPT, NEIGHBOURHOOD_SUBTITLE, NEIGHBOURHOOD_TITLE, MODEL_KEY, MODELS } from '../constants';
 
@@ -10,6 +10,7 @@ function WordNumberPage() {
   const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const changeModel = (event) => {
     setModel(event.target.value);
@@ -19,9 +20,15 @@ function WordNumberPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}&model=${model}`);
-    setResponse(response.data);
-    setIsLoading(false);
+    try {
+      const response = await axios.get(`https://api.word2med.com/neighbours?words=${word}&n=${number}&model=${model}`)
+      setResponse(response.data);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -88,7 +95,8 @@ function WordNumberPage() {
         </div>
         {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
       </form>
-      {response && (
+      {errorMessage.length === 0 ?
+      response && (
         <div className="response">
           <h2 className="response-title">Related Words</h2>
           <div className="response-text-container">
@@ -110,7 +118,16 @@ function WordNumberPage() {
           </table>
           </div>
         </div>
-      )}
+      )
+      :
+      (
+        <div className="response">
+        <Alert variant="filled" severity="error">
+          <strong>{errorMessage}</strong>
+        </Alert>
+        </div>
+      )
+      }
     </div>
   );
 }

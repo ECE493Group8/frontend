@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
 import axios from 'axios';
 import { ANALOGY_PROMPT, ANALOGY_SUBTITLE, ANALOGY_TITLE, INPUT_NUMBER_ERROR_0, INPUT_WORD_ERROR, MODELS, MODEL_KEY } from '../constants';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function ThreeWordInputPage() {
   const [word1, setWord1] = useState('');
@@ -12,6 +12,7 @@ function ThreeWordInputPage() {
   const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const changeModel = (event) => {
     setModel(event.target.value);
@@ -21,12 +22,18 @@ function ThreeWordInputPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
-    setResponse(response.data);
-    setWord1(response.data.a);
-    setWord2(response.data.b);
-    setWord3(response.data.c);
-    setIsLoading(false);
+    try {
+      const response = await axios.get(`https://api.word2med.com/analogy?a=${word1}&b=${word2}&c=${word3}&n=${number}&model=${model}`);
+      setResponse(response.data);
+      setWord1(response.data.a);
+      setWord2(response.data.b);
+      setWord3(response.data.c);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -132,7 +139,8 @@ function ThreeWordInputPage() {
         {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
       </form>
 
-      {response ? (
+      {errorMessage.length === 0 ? 
+      (response ? (
         <div className="response">
           <h2 className="response-title">Analogy completions:</h2>
           <div className="response-text-container">
@@ -156,7 +164,16 @@ function ThreeWordInputPage() {
         </div>
       ):  (
         <span></span>
-      )}
+      ))
+      :
+      (
+        <div className="response">
+        <Alert variant="filled" severity="error">
+          <strong>{errorMessage}</strong>
+        </Alert>
+        </div>
+      )
+      }
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LoadingButton } from '@mui/lab'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Alert, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import { INPUT_WORD_ERROR, MODEL_KEY, MODELS } from '../constants';
 
@@ -9,6 +9,7 @@ function WordInputPage() {
   const [model, setModel] = useState(localStorage.getItem(MODEL_KEY));
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const changeModel = (event) => {
     setModel(event.target.value);
@@ -19,18 +20,18 @@ function WordInputPage() {
     setWord(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    axios.get(`https://api.word2med.com/vector?word=${word}&model=${model}`)
-    .then(response => {
-        setResponse(response.data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setIsLoading(false);
-      });
+    try {
+      const response = await axios.get(`https://api.word2med.com/vector?word=${word}&model=${model}`)
+      setResponse(response.data);
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -78,14 +79,24 @@ function WordInputPage() {
         {isLoading ? <LoadingButton loading type="submit" variant='contained'>Submit</LoadingButton> : <LoadingButton type="submit" variant='contained'>Submit</LoadingButton>}
       </form>
 
-      {response && (
+      {errorMessage.length === 0 ?
+      response && (
         <div className="response">
           <h2 className="response-title">Vector representation of <i>{response.word}</i></h2>
           <div className="response-text-container">
           <p className="response-text">{response.vector.join(', ')}</p>
           </div>
         </div>
-      )}
+      )
+      :
+      (
+        <div className="response">
+        <Alert variant="filled" severity="error">
+          <strong>{errorMessage}</strong>
+        </Alert>
+        </div>
+      )
+      }
     </div>
   );
 }
